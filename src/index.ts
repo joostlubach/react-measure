@@ -16,7 +16,6 @@ export function useSize(...args: any[]) {
       width:  element.offsetWidth,
       height: element.offsetHeight
     }
-
     if (prevSizeRef.current == null || !objectEquals(prevSizeRef.current, size)) {
       callback(size)
       prevSizeRef.current = size
