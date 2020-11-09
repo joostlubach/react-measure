@@ -1,6 +1,6 @@
 import React from 'react'
 import {useTimer} from 'react-timer'
-import {objectEquals} from '@src/util'
+import {objectEquals} from '~/util'
 
 export function useSize(ref: React.RefObject<HTMLElement> | null, options: UseLayoutOptions, callback: (size: Size) => any): void
 export function useSize(ref: React.RefObject<HTMLElement> | null, callback: (size: Size) => any): void
@@ -16,6 +16,7 @@ export function useSize(...args: any[]) {
       width:  element.offsetWidth,
       height: element.offsetHeight
     }
+
     if (prevSizeRef.current == null || !objectEquals(prevSizeRef.current, size)) {
       callback(size)
       prevSizeRef.current = size
