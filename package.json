@@ -1,0 +1,7 @@
+{
+  "name": "react-layout",
+  "description": "Layout hooks",
+  "peerDependencies": {
+    "react": "*"
+  }
+}
