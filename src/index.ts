@@ -1,6 +1,6 @@
 import React from 'react'
 import {useTimer} from 'react-timer'
-import {objectEquals} from './util'
+import {layoutRectEquals, sizeEquals} from './util'
 
 export function useSize(ref: React.RefObject<HTMLElement> | null, options: UseLayoutOptions, callback: (size: Size) => any): void
 export function useSize(ref: React.RefObject<HTMLElement> | null, callback: (size: Size) => any): void
@@ -16,7 +16,7 @@ export function useSize(...args: any[]) {
       width:  element.offsetWidth,
       height: element.offsetHeight
     }
-    if (prevSizeRef.current == null || !objectEquals(prevSizeRef.current, size)) {
+    if (prevSizeRef.current == null || !sizeEquals(prevSizeRef.current, size)) {
       callback(size)
       prevSizeRef.current = size
     }
@@ -34,7 +34,7 @@ export function useBoundingRectangle(...args: any[]) {
 
   return useLayout(ref, options, element => {
     const rect = element.getBoundingClientRect()
-    if (prevRectRef.current == null || !objectEquals(prevRectRef.current, rect)) {
+    if (prevRectRef.current == null || !layoutRectEquals(prevRectRef.current, rect)) {
       callback(rect)
       prevRectRef.current = rect
     }
