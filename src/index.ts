@@ -23,8 +23,8 @@ export function useSize(...args: any[]) {
   })
 }
 
-export function useBoundingRectangle(ref: React.RefObject<HTMLElement> | null, options: UseLayoutOptions, callback: (rect: LayoutRect) => any): void
-export function useBoundingRectangle(ref: React.RefObject<HTMLElement> | null, callback: (rect: LayoutRect) => any): void
+export function useBoundingRectangle(ref: React.RefObject<HTMLElement> | null, options: UseLayoutOptions, callback: (rect: LayoutRect, element: HTMLElement) => any): void
+export function useBoundingRectangle(ref: React.RefObject<HTMLElement> | null, callback: (rect: LayoutRect, element: HTMLElement) => any): void
 export function useBoundingRectangle(...args: any[]) {
   const ref      = args.shift()
   const callback = args.pop()
@@ -35,7 +35,7 @@ export function useBoundingRectangle(...args: any[]) {
   return useLayout(ref, options, element => {
     const rect = element.getBoundingClientRect()
     if (prevRectRef.current == null || !layoutRectEquals(prevRectRef.current, rect)) {
-      callback(rect)
+      callback(rect, element)
       prevRectRef.current = rect
     }
   })
