@@ -1,6 +1,6 @@
 import React from 'react'
-import {useTimer} from 'react-timer'
-import {layoutRectEquals, sizeEquals} from './util'
+import { useTimer } from 'react-timer'
+import { layoutRectEquals, sizeEquals } from './util'
 
 export function useSize(ref: React.RefObject<HTMLElement> | null, options: UseLayoutOptions, callback: (size: Size) => any): void
 export function useSize(ref: React.RefObject<HTMLElement> | null, callback: (size: Size) => any): void
