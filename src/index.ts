@@ -2,8 +2,8 @@ import React from 'react'
 import { useTimer } from 'react-timer'
 import { layoutRectEquals, sizeEquals } from './util'
 
-export function useSize(ref: React.RefObject<HTMLElement> | null, options: UseLayoutOptions, callback: (size: Size) => any): void
-export function useSize(ref: React.RefObject<HTMLElement> | null, callback: (size: Size) => any): void
+export function useSize(ref: React.RefObject<LayoutElement> | null, options: UseLayoutOptions, callback: (size: Size) => any): void
+export function useSize(ref: React.RefObject<LayoutElement> | null, callback: (size: Size) => any): void
 export function useSize(...args: any[]) {
   const ref      = args.shift()
   const callback = args.pop()
@@ -12,10 +12,7 @@ export function useSize(...args: any[]) {
   const prevSizeRef = React.useRef<Size | null>(null)
 
   return useLayout(ref, options, element => {
-    const size = {
-      width:  element.offsetWidth,
-      height: element.offsetHeight
-    }
+    const size = getSize(element)
     if (prevSizeRef.current == null || !sizeEquals(prevSizeRef.current, size)) {
       callback(size)
       prevSizeRef.current = size
@@ -23,8 +20,8 @@ export function useSize(...args: any[]) {
   })
 }
 
-export function useBoundingRectangle(ref: React.RefObject<HTMLElement> | null, options: UseLayoutOptions, callback: (rect: LayoutRect) => any): void
-export function useBoundingRectangle(ref: React.RefObject<HTMLElement> | null, callback: (rect: LayoutRect) => any): void
+export function useBoundingRectangle(ref: React.RefObject<LayoutElement> | null, options: UseLayoutOptions, callback: (rect: LayoutRect) => any): void
+export function useBoundingRectangle(ref: React.RefObject<LayoutElement> | null, callback: (rect: LayoutRect) => any): void
 export function useBoundingRectangle(...args: any[]) {
   const ref      = args.shift()
   const callback = args.pop()
@@ -41,11 +38,11 @@ export function useBoundingRectangle(...args: any[]) {
   })
 }
 
-export function useLayout(ref: React.RefObject<HTMLElement> | null, options: UseLayoutOptions, callback: (element: HTMLElement) => any): void
-export function useLayout(ref: React.RefObject<HTMLElement> | null, callback: (element: HTMLElement) => any): void
+export function useLayout(ref: React.RefObject<LayoutElement> | null, options: UseLayoutOptions, callback: (element: LayoutElement) => any): void
+export function useLayout(ref: React.RefObject<LayoutElement> | null, callback: (element: LayoutElement) => any): void
 export function useLayout(...args: any[]) {
-  const ref      = args.shift() as React.RefObject<HTMLElement>
-  const callback = args.pop() as (element: HTMLElement) => any
+  const ref      = args.shift() as React.RefObject<LayoutElement>
+  const callback = args.pop() as (element: LayoutElement) => any
   const options  = (args.pop() ?? {}) as UseLayoutOptions
 
   const timer = useTimer()
@@ -87,7 +84,23 @@ export function useLayout(...args: any[]) {
   }, [callback, onLayout, ref])
 }
 
+export function getSize(element: LayoutElement) {
+  if (element instanceof HTMLElement) {
+    return {
+      width:  element.offsetWidth,
+      height: element.offsetHeight
+    }
+  } else {
+    return {
+      width:  element.clientWidth,
+      height: element.clientHeight
+    }
+  }
+}
+
 export interface UseLayoutOptions {
   debounce?: number
   throttle?: number
 }
+
+export type LayoutElement = HTMLElement | SVGElement
