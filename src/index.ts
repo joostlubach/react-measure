@@ -67,7 +67,7 @@ export function useLayout(...args: any[]) {
 
   React.useLayoutEffect(() => {
     if (!('ResizeObserver' in window)) {
-      console.warn("useSize(): ResizeObserver not supported")
+      console.warn("useLayout(): ResizeObserver not supported")
       return
     }
 
