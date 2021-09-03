@@ -1,6 +1,7 @@
 {
-  "name": "react-layout",
-  "description": "Layout hooks",
+  "name": "react-measure",
+  "description": "React hooks to measure elements.",
+  "version": "1.0.0",
   "peerDependencies": {
     "react": "*"
   }
