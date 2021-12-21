@@ -88,12 +88,12 @@ export function getSize(element: LayoutElement) {
   if (element instanceof HTMLElement) {
     return {
       width:  element.offsetWidth,
-      height: element.offsetHeight
+      height: element.offsetHeight,
     }
   } else {
     return {
       width:  element.clientWidth,
-      height: element.clientHeight
+      height: element.clientHeight,
     }
   }
 }
