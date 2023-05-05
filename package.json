@@ -2,7 +2,33 @@
   "name": "react-measure",
   "description": "React hooks to measure elements.",
   "version": "1.0.0",
+  "license": "MIT",
+  "files": [
+    "dist"
+  ],
+  "exports": {
+    ".": {
+      "import": "./dist/react-measure.js",
+      "types": "./dist/index.d.ts"
+    }
+  },
+  "scripts": {
+    "dev": "vite",
+    "compile": "tsc -p .",
+    "build": "vite build",
+    "preview": "vite preview",
+    "test": "NODE_ENV=test jest"
+  },
   "peerDependencies": {
-    "react": "*"
+    "react": "^18.0",
+    "react-dom": "^18.0"
+  },
+  "dependencies": {
+    "react-timer": "workspace:^"
+  },
+  "devDependencies": {
+    "vite": "^4.2.0",
+    "vite-plugin-dts": "^2.1.0",
+    "vite-tsconfig-paths": "^4.0.7"
   }
 }

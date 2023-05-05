@@ -1,3 +1,5 @@
+import { LayoutRect, Size } from './types'
+
 export function layoutRectEquals(rect1: LayoutRect, rect2: LayoutRect): boolean {
   if (rect1.left !== rect2.left) { return false }
   if (rect1.top !== rect2.top) { return false }
