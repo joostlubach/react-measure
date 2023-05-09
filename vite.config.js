@@ -20,7 +20,8 @@ export default defineConfig({
             fileName: () => `${name}.js`,
         },
         rollupOptions: {
-            external: ['react', 'react-dom'],
+            external: ['react'],
         },
+        sourcemap: true,
     },
 })
