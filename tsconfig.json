@@ -20,10 +20,5 @@
   },
   "include": [
     "src"
-  ],
-  "references": [
-    {
-      "path": "../react-timer/tsconfig.json"
-    }
   ]
 }
