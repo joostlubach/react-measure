@@ -15,4 +15,3 @@ export function sizeEquals(size1: Size, size2: Size): boolean {
 
   return true
 }
-

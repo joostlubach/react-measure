@@ -6,9 +6,9 @@ import { layoutRectEquals, sizeEquals } from './util'
 export function useSize<E extends LayoutElement>(ref: React.RefObject<E> | null, options: UseLayoutOptions, callback: (size: Size) => any): MeasureFunction
 export function useSize<E extends LayoutElement>(ref: React.RefObject<E> | null, callback: (size: Size) => any): MeasureFunction
 export function useSize(...args: any[]) {
-  const ref      = args.shift()
+  const ref = args.shift()
   const callback = args.pop()
-  const options  = args.pop() ?? {}
+  const options = args.pop() ?? {}
 
   const prevSizeRef = React.useRef<Size | null>(null)
 
@@ -24,9 +24,9 @@ export function useSize(...args: any[]) {
 export function useBoundingRectangle<E extends LayoutElement>(ref: React.RefObject<E> | null, options: UseLayoutOptions, callback: (rect: LayoutRect) => any): MeasureFunction
 export function useBoundingRectangle<E extends LayoutElement>(ref: React.RefObject<E> | null, callback: (rect: LayoutRect) => any): MeasureFunction
 export function useBoundingRectangle(...args: any[]) {
-  const ref      = args.shift()
+  const ref = args.shift()
   const callback = args.pop()
-  const options  = args.pop() ?? {}
+  const options = args.pop() ?? {}
 
   const prevRectRef = React.useRef<LayoutRect | null>(null)
 
@@ -42,9 +42,9 @@ export function useBoundingRectangle(...args: any[]) {
 export function useLayout<E extends LayoutElement>(ref: React.RefObject<E> | null, options: UseLayoutOptions, callback: (element: E) => any): MeasureFunction
 export function useLayout<E extends LayoutElement>(ref: React.RefObject<E> | null, callback: (element: E) => any): MeasureFunction
 export function useLayout(...args: any[]) {
-  const ref      = args.shift() as React.RefObject<LayoutElement>
+  const ref = args.shift() as React.RefObject<LayoutElement>
   const callback = args.pop() as (element: LayoutElement) => any
-  const options  = (args.pop() ?? {}) as UseLayoutOptions
+  const options = (args.pop() ?? {}) as UseLayoutOptions
 
   const timer = useTimer()
   const onLayout = React.useCallback(() => {

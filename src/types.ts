@@ -1,11 +1,11 @@
 export interface Size {
-  width: number
+  width:  number
   height: number
 }
 
 export interface LayoutRect {
-  top: number
-  left: number
-  width: number
+  top:    number
+  left:   number
+  width:  number
   height: number
 }
