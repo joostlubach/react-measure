@@ -1,5 +1,6 @@
 import React from 'react'
 import { useTimer } from 'react-timer'
+
 import { LayoutRect, Size } from './types'
 import { layoutRectEquals, sizeEquals } from './util'
 
