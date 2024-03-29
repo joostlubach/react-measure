@@ -1,8 +1,8 @@
 import React from 'react'
 import { useTimer } from 'react-timer'
 
-import { LayoutRect, Size } from './types'
-import { layoutRectEquals, sizeEquals } from './util'
+import { LayoutRect, Size } from './types.js'
+import { layoutRectEquals, sizeEquals } from './util.js'
 
 export function useSize<E extends LayoutElement>(ref: React.RefObject<E> | null, options: UseLayoutOptions, callback: (size: Size) => any): MeasureFunction
 export function useSize<E extends LayoutElement>(ref: React.RefObject<E> | null, callback: (size: Size) => any): MeasureFunction
