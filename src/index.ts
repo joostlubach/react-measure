@@ -1,54 +1,62 @@
-import React from 'react'
+import { useCallback, useLayoutEffect, useState } from 'react'
 import { useTimer } from 'react-timer'
-
+import { useContinuousRef } from 'react-util/hooks'
 import { LayoutRect, Size } from './types'
 import { layoutRectEquals, sizeEquals } from './util'
 
-export function useSize<E extends LayoutElement>(ref: React.RefObject<E> | null, options: UseLayoutOptions, callback: (size: Size) => any): MeasureFunction
-export function useSize<E extends LayoutElement>(ref: React.RefObject<E> | null, callback: (size: Size) => any): MeasureFunction
+export function useSize<E extends LayoutElement>(ref: React.RefObject<E> | null, options: UseLayoutOptions, callback: (size: Size) => any): Size
+export function useSize<E extends LayoutElement>(ref: React.RefObject<E> | null, callback?: (size: Size) => any): Size
 export function useSize(...args: any[]) {
   const ref = args.shift()
   const callback = args.pop()
   const options = args.pop() ?? {}
 
-  const prevSizeRef = React.useRef<Size | null>(null)
+  const [size, setSize] = useState<Size>({width: 0, height: 0})
+  const prevSizeRef = useContinuousRef(size)
 
-  return useLayout(ref, options, element => {
+  useLayout(ref, options, element => {
     const size = getSize(element)
     if (prevSizeRef.current == null || !sizeEquals(prevSizeRef.current, size)) {
-      callback(size)
+      setSize(size)
+      callback?.(size)
       prevSizeRef.current = size
     }
   })
+
+  return size
 }
 
-export function useBoundingRectangle<E extends LayoutElement>(ref: React.RefObject<E> | null, options: UseLayoutOptions, callback: (rect: LayoutRect) => any): MeasureFunction
-export function useBoundingRectangle<E extends LayoutElement>(ref: React.RefObject<E> | null, callback: (rect: LayoutRect) => any): MeasureFunction
+export function useBoundingRectangle<E extends LayoutElement>(ref: React.RefObject<E> | null, options: UseLayoutOptions, callback: (rect: LayoutRect) => any): LayoutRect
+export function useBoundingRectangle<E extends LayoutElement>(ref: React.RefObject<E> | null, callback?: (rect: LayoutRect) => any): LayoutRect
 export function useBoundingRectangle(...args: any[]) {
   const ref = args.shift()
   const callback = args.pop()
   const options = args.pop() ?? {}
 
-  const prevRectRef = React.useRef<LayoutRect | null>(null)
+  const [rect, setRect] = useState<LayoutRect>({left: 0, top: 0, width: 0, height: 0})
+  const prevRectRef = useContinuousRef(rect)
 
-  return useLayout(ref, options, element => {
+  useLayout(ref, options, element => {
     const rect = element.getBoundingClientRect()
     if (prevRectRef.current == null || !layoutRectEquals(prevRectRef.current, rect)) {
+      setRect(rect)
       callback(rect)
       prevRectRef.current = rect
     }
   })
+
+  return rect
 }
 
-export function useLayout<E extends LayoutElement>(ref: React.RefObject<E> | null, options: UseLayoutOptions, callback: (element: E) => any): MeasureFunction
-export function useLayout<E extends LayoutElement>(ref: React.RefObject<E> | null, callback: (element: E) => any): MeasureFunction
+export function useLayout<E extends LayoutElement>(ref: React.RefObject<E> | null, options: UseLayoutOptions, callback: (element: E) => any): void
+export function useLayout<E extends LayoutElement>(ref: React.RefObject<E> | null, callback: (element: E) => any): void
 export function useLayout(...args: any[]) {
   const ref = args.shift() as React.RefObject<LayoutElement>
   const callback = args.pop() as (element: LayoutElement) => any
   const options = (args.pop() ?? {}) as UseLayoutOptions
 
   const timer = useTimer()
-  const onLayout = React.useCallback(() => {
+  const onLayout = useCallback(() => {
     if (options.debounce == null && options.throttle == null) {
       if (ref.current == null) { return }
       callback(ref.current)
@@ -67,7 +75,7 @@ export function useLayout(...args: any[]) {
     }, options.throttle ?? options.debounce ?? 0)
   }, [callback, options.debounce, options.throttle, ref, timer])
 
-  React.useLayoutEffect(() => {
+  useLayoutEffect(() => {
     if (!('ResizeObserver' in window)) {
       console.warn("useLayout(): ResizeObserver not supported")
       return
@@ -84,11 +92,6 @@ export function useLayout(...args: any[]) {
 
     return () => { observer.disconnect() }
   }, [callback, onLayout, ref])
-
-  return React.useCallback(() => {
-    if (ref.current == null) { return }
-    callback(ref.current)
-  }, [callback, ref])
 }
 
 export function getSize(element: LayoutElement) {
