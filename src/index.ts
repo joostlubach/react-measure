@@ -1,15 +1,16 @@
+import { isFunction } from 'lodash'
 import { useCallback, useLayoutEffect, useState } from 'react'
 import { useTimer } from 'react-timer'
 import { useContinuousRef } from 'react-util/hooks'
 import { LayoutRect, Size } from './types'
 import { layoutRectEquals, sizeEquals } from './util'
 
-export function useSize<E extends LayoutElement>(ref: React.RefObject<E> | null, options: UseLayoutOptions, callback: (size: Size) => any): Size
+export function useSize<E extends LayoutElement>(ref: React.RefObject<E> | null, callback: (size: Size) => any, options?: UseLayoutOptions): Size
 export function useSize<E extends LayoutElement>(ref: React.RefObject<E> | null, callback?: (size: Size) => any): Size
 export function useSize(...args: any[]) {
   const ref = args.shift()
-  const callback = args.pop()
-  const options = args.pop() ?? {}
+  const callback = isFunction(args[0]) ? args.shift() : undefined
+  const options = args.shift() ?? {}
 
   const [size, setSize] = useState<Size>({width: 0, height: 0})
   const prevSizeRef = useContinuousRef(size)
@@ -26,12 +27,12 @@ export function useSize(...args: any[]) {
   return size
 }
 
-export function useBoundingRectangle<E extends LayoutElement>(ref: React.RefObject<E> | null, options: UseLayoutOptions, callback: (rect: LayoutRect) => any): LayoutRect
+export function useBoundingRectangle<E extends LayoutElement>(ref: React.RefObject<E> | null, callback: (rect: LayoutRect) => any, options: UseLayoutOptions): LayoutRect
 export function useBoundingRectangle<E extends LayoutElement>(ref: React.RefObject<E> | null, callback?: (rect: LayoutRect) => any): LayoutRect
 export function useBoundingRectangle(...args: any[]) {
   const ref = args.shift()
-  const callback = args.pop()
-  const options = args.pop() ?? {}
+  const callback = isFunction(args[0]) ? args.shift() : undefined
+  const options = args.shift() ?? {}
 
   const [rect, setRect] = useState<LayoutRect>({left: 0, top: 0, width: 0, height: 0})
   const prevRectRef = useContinuousRef(rect)
