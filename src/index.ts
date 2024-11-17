@@ -1,5 +1,5 @@
 import { isFunction } from 'lodash'
-import { useCallback, useLayoutEffect, useState } from 'react'
+import { useCallback, useLayoutEffect, useRef, useState } from 'react'
 import { useTimer } from 'react-timer'
 import { useContinuousRef } from 'react-util/hooks'
 import { LayoutRect, Size } from './types'
@@ -56,11 +56,33 @@ export function useLayout(...args: any[]) {
   const callback = args.pop() as (element: LayoutElement) => any
   const options = (args.pop() ?? {}) as UseLayoutOptions
 
+  const prevRect = useRef<LayoutRect>({left: 0, top: 0, width: 0, height: 0})
+
   const timer = useTimer()
+
+  const update = useCallback((element: LayoutElement) => {
+    const rect = element.getBoundingClientRect()
+    const nextRect = {
+      left:   Math.floor(rect.left),
+      top:    Math.floor(rect.top),
+      width:  Math.ceil(rect.width),
+      height: Math.ceil(rect.height)
+    }
+
+    if (prevRect.current.left === nextRect.left &&
+      prevRect.current.top === nextRect.top &&
+      prevRect.current.width === nextRect.width &&
+      prevRect.current.height === nextRect.height
+    ) { return }
+
+    prevRect.current = nextRect
+    callback(element)
+  }, [])
+
   const onLayout = useCallback(() => {
     if (options.debounce == null && options.throttle == null) {
       if (ref.current == null) { return }
-      callback(ref.current)
+      update(ref.current)
     }
 
     if (options.debounce != null) {
@@ -72,9 +94,9 @@ export function useLayout(...args: any[]) {
 
     timer.setTimeout(() => {
       if (ref.current == null) { return }
-      callback(ref.current)
+      update(ref.current)
     }, options.throttle ?? options.debounce ?? 0)
-  }, [callback, options.debounce, options.throttle, ref, timer])
+  }, [update, options.debounce, options.throttle, ref, timer])
 
   useLayoutEffect(() => {
     if (!('ResizeObserver' in window)) {
@@ -89,10 +111,10 @@ export function useLayout(...args: any[]) {
     const observer = new ResizeObserver(onLayout)
     observer.observe(ref.current)
 
-    callback(ref.current)
+    update(ref.current)
 
     return () => { observer.disconnect() }
-  }, [callback, onLayout, ref])
+  }, [ref, onLayout, update])
 }
 
 export function getSize(element: LayoutElement) {
