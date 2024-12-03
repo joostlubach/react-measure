@@ -5,6 +5,8 @@ import { useContinuousRef } from 'react-util/hooks'
 import { LayoutRect, Size } from './types'
 import { layoutRectEquals, sizeEquals } from './util'
 
+export * from './types'
+
 export function useSize<E extends LayoutElement>(ref: React.RefObject<E> | null, callback: (size: Size) => any, options?: UseLayoutOptions): Size
 export function useSize<E extends LayoutElement>(ref: React.RefObject<E> | null, callback?: (size: Size) => any): Size
 export function useSize(...args: any[]) {
