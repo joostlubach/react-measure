@@ -16,7 +16,7 @@
     "test": "NODE_ENV=test jest"
   },
   "peerDependencies": {
-    "react": "^18.0"
+    "react": "^19.1.1"
   },
   "dependencies": {
     "react-timer": "workspace:^",
