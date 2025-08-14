@@ -16,14 +16,14 @@
     "test": "NODE_ENV=test jest"
   },
   "peerDependencies": {
-    "react": "^19.1.1"
+    "react": "^19.1"
   },
   "dependencies": {
     "react-timer": "workspace:^",
     "react-util": "workspace:*"
   },
   "devDependencies": {
-    "@types/react": "^18.0",
+    "@types/react": "^19.1",
     "typescript": "^5.9.2"
   }
 }
