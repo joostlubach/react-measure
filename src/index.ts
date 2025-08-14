@@ -7,9 +7,9 @@ import { layoutRectEquals, sizeEquals } from './util'
 
 export * from './types'
 
-export function useSize<E extends LayoutElement>(ref: React.RefObject<E> | null, callback: (size: Size) => any, options?: UseLayoutOptions): Size
-export function useSize<E extends LayoutElement>(ref: React.RefObject<E> | null, options?: UseLayoutOptions): Size
-export function useSize<E extends LayoutElement>(ref: React.RefObject<E> | null, callback?: (size: Size) => any): Size
+export function useSize<E extends LayoutElement>(ref: React.RefObject<E | null> | null, callback: (size: Size) => any, options?: UseLayoutOptions): Size
+export function useSize<E extends LayoutElement>(ref: React.RefObject<E | null> | null, options?: UseLayoutOptions): Size
+export function useSize<E extends LayoutElement>(ref: React.RefObject<E | null> | null, callback?: (size: Size) => any): Size
 export function useSize(...args: any[]) {
   const ref = args.shift()
   const callback = isFunction(args[0]) ? args.shift() : undefined
