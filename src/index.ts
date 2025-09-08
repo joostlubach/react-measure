@@ -30,8 +30,8 @@ export function useSize(...args: any[]) {
   return size
 }
 
-export function useBoundingRectangle<E extends LayoutElement>(ref: React.RefObject<E> | null, callback: (rect: LayoutRect) => any, options: UseLayoutOptions): LayoutRect
-export function useBoundingRectangle<E extends LayoutElement>(ref: React.RefObject<E> | null, callback?: (rect: LayoutRect) => any): LayoutRect
+export function useBoundingRectangle<E extends LayoutElement>(ref: React.RefObject<E | null> | null, callback: (rect: LayoutRect) => any, options: UseLayoutOptions): LayoutRect
+export function useBoundingRectangle<E extends LayoutElement>(ref: React.RefObject<E | null> | null, callback?: (rect: LayoutRect) => any): LayoutRect
 export function useBoundingRectangle(...args: any[]) {
   const ref = args.shift()
   const callback = isFunction(args[0]) ? args.shift() : undefined
@@ -52,8 +52,8 @@ export function useBoundingRectangle(...args: any[]) {
   return rect
 }
 
-export function useLayout<E extends LayoutElement>(ref: React.RefObject<E> | null, options: UseLayoutOptions, callback: (element: E) => any): void
-export function useLayout<E extends LayoutElement>(ref: React.RefObject<E> | null, callback: (element: E) => any): void
+export function useLayout<E extends LayoutElement>(ref: React.RefObject<E | null> | null, options: UseLayoutOptions, callback: (element: E) => any): void
+export function useLayout<E extends LayoutElement>(ref: React.RefObject<E | null> | null, callback: (element: E) => any): void
 export function useLayout(...args: any[]) {
   const ref = args.shift() as React.RefObject<LayoutElement>
   const callback = args.pop() as (element: LayoutElement) => any
