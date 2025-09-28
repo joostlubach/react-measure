@@ -27,16 +27,15 @@
     "test": "NODE_ENV=test jest"
   },
   "peerDependencies": {
-    "react": "^18.0"
+    "react": "^19.1"
   },
   "dependencies": {
-    "react": "^18.2.0",
-    "react-timer": "workspace:^"
+    "react-timer": "workspace:^",
+    "react-util": "workspace:*"
   },
   "devDependencies": {
     "copyfiles": "^2.4.1",
     "rimraf": "^5.0.5",
-    "tsc-alias": "^1.8.8",
     "typescript": "^5.8.3"
   }
 }
