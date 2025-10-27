@@ -69,7 +69,7 @@ export function useLayout(...args: any[]) {
       left:   Math.floor(rect.left),
       top:    Math.floor(rect.top),
       width:  Math.ceil(rect.width),
-      height: Math.ceil(rect.height)
+      height: Math.ceil(rect.height),
     }
 
     if (prevRect.current.left === nextRect.left &&
@@ -80,7 +80,7 @@ export function useLayout(...args: any[]) {
 
     prevRect.current = nextRect
     callback(element)
-  }, [])
+  }, [callback])
 
   const onLayout = useCallback(() => {
     if (options.debounce == null && options.throttle == null) {
