@@ -44,7 +44,7 @@ export function useBoundingRectangle(...args: any[]) {
     const rect = element.getBoundingClientRect()
     if (prevRectRef.current == null || !layoutRectEquals(prevRectRef.current, rect)) {
       setRect(rect)
-      callback(rect)
+      callback?.(rect)
       prevRectRef.current = rect
     }
   })
