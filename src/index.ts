@@ -62,6 +62,7 @@ export function useLayout(...args: any[]) {
   const prevRect = useRef<LayoutRect>({left: 0, top: 0, width: 0, height: 0})
 
   const timer = useTimer()
+  const updateCountRef = useRef<number>(0)
 
   const update = useCallback((element: LayoutElement) => {
     const rect = element.getBoundingClientRect()
@@ -76,9 +77,17 @@ export function useLayout(...args: any[]) {
       prevRect.current.top === nextRect.top &&
       prevRect.current.width === nextRect.width &&
       prevRect.current.height === nextRect.height
-    ) { return }
-
+    ) {
+      updateCountRef.current = 0
+      return
+    }
     prevRect.current = nextRect
+
+    if ((updateCountRef.current += 1) > 20) {
+      console.warn('useLayout() is not settling', element)
+      return
+    }
+
     callback(element)
   }, [callback])
 
@@ -114,6 +123,7 @@ export function useLayout(...args: any[]) {
     const observer = new ResizeObserver(onLayout)
     observer.observe(ref.current)
 
+    updateCountRef.current = 0
     update(ref.current)
 
     return () => { observer.disconnect() }
