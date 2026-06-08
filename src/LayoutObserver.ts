@@ -33,7 +33,6 @@ export class LayoutObserver {
   private observedElements = new Map<Element, LayoutRect>()
   private rafHandle: number | null = null
 
-
   /**
    * Start observing an element for layout changes.
    */

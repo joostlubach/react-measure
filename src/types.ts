@@ -3,9 +3,9 @@ export interface Size {
   height: number
 }
 
-export interface LayoutRect {
-  top:    number
-  left:   number
-  width:  number
-  height: number
+export interface Position {
+  top: number
+  left: number
 }
+
+export type LayoutRect = Position & Size
