@@ -1,4 +1,4 @@
-import Timer from 'react-timer'
+import Timer from '@mosdev/react-timer'
 import { LayoutRect } from './types'
 
 export class LayoutObserver {

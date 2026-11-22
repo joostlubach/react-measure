@@ -1,5 +1,5 @@
 {
-  "name": "react-measure",
+  "name": "@mosdev/react-measure",
   "description": "React hooks to measure elements.",
   "version": "1.0.0",
   "license": "MIT",
@@ -31,8 +31,8 @@
   },
   "dependencies": {
     "lodash": "^4.17.21",
-    "react-timer": "workspace:^",
-    "react-util": "workspace:*"
+    "@mosdev/react-timer": "workspace:^",
+    "@mosdev/react-util": "workspace:*"
   },
   "devDependencies": {
     "@stylistic/eslint-plugin": "^5.10.0",
